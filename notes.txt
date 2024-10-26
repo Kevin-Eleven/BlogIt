@@ -1,0 +1,1 @@
+1. Browser wasnt able to parse the output.css file properly so had to make a separate route for that with correct content type for it to load properly

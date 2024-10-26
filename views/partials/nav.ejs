@@ -1,0 +1,66 @@
+<nav class="bg-blue-500 w-full">
+  <div class="flex justify-between items-center p-4">
+    <a href="/" class="text-white text-lg font-bold">Blog App</a>
+    <div class="space-x-4 relative">
+      <a href="/" class="text-white hover:text-gray-200">Home</a>
+      <% if (locals.user) { %>
+      <a href="/blog/add" class="text-white hover:text-gray-200">Add Blog</a>
+      <div class="relative inline-block text-left">
+        <button
+          type="button"
+          class="inline-flex justify-center w-full rounded-md px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none"
+          id="menu-button"
+          aria-expanded="true"
+          aria-haspopup="true"
+        >
+          <%= user.fullName %>
+          <svg
+            class="-mr-1 ml-2 h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <div
+          class="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="menu-button"
+          tabindex="-1"
+          id="dropdown-menu"
+        >
+          <div class="py-1" role="none">
+            <a
+              href="/user/logout"
+              class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 w-full text-center"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-0"
+              >Logout</a
+            >
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+      <a href="/user/signin" class="text-white hover:text-gray-200">Signin</a>
+      <a href="/user/signup" class="text-white hover:text-gray-200"
+        >Create Account</a
+      >
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.getElementById("menu-button").addEventListener("click", function () {
+    var dropdownMenu = document.getElementById("dropdown-menu");
+    dropdownMenu.classList.toggle("hidden");
+  });
+</script>
