@@ -3,7 +3,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
-const ejs = require("ejs");
 const userRoute = require("./routes/user.js");
 const blogRoute = require("./routes/blog.js");
 const cookieParser = require("cookie-parser");
