@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { Router } = require("express");
 const router = Router();
 
@@ -7,13 +9,22 @@ const Comment = require("../models/comments");
 const multer = require("multer");
 const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(`./public/uploads`));
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${Date.now()}-${file.originalname}`;
-    cb(null, fileName);
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinaryConfig");
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "uploads",
+    format: async (req, file) => "jpg", // supports promises as well
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+    transformation: [
+      { width: 1200, height: 1200, crop: "fill", gravity: "auto" },
+      {
+        quality: "auto",
+        fetch_format: "auto",
+      },
+    ],
   },
 });
 
@@ -44,10 +55,9 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
   const blog = await Blog.create({
     title,
     body,
-    coverImageURL: `/uploads/${req.file.filename}`,
+    coverImageURL: req.file.path,
     createdBy,
   });
-
   res.redirect(`/blog/${blog._id}`);
 });
 
