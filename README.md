@@ -1,4 +1,4 @@
-# Blog App
+# BlogIt
 
 ## Description
 
